@@ -3,13 +3,13 @@
 #include <memory>
 using namespace std;
 
-// The main calculation for the logic gate which is compulsory to all gates.
+// Main logic for the gate which needs to be inherited by all the classes.
 class LogicGate {
 public:
     virtual bool calculate() const = 0;
 };
 
-// Logic for AND Gate.
+// Logic class for AND Gate.
 class AndGate : public LogicGate {
 private:
     bool input1;
@@ -23,7 +23,7 @@ public:
     }
 };
 
-// Logic for OR Gate.
+//Logic class for OR Gate.
 class OrGate : public LogicGate {
 private:
     bool input1;
@@ -37,7 +37,7 @@ public:
     }
 };
 
-// Logic for NOT Gate.
+//Logic class for NOT Gate.
 class NotGate : public LogicGate {
 private:
     bool input;
@@ -50,6 +50,7 @@ public:
     }
 };
 
+//Logic for the merge_function.
 unique_ptr<LogicGate> mergeGates(const vector<unique_ptr<LogicGate>>& gates) {
 
     if (gates.size() != 2) {
@@ -64,6 +65,7 @@ unique_ptr<LogicGate> mergeGates(const vector<unique_ptr<LogicGate>>& gates) {
 
     return make_unique<AndGate>(input1, input2);
 }
+
 
 int main() {
     bool input1, input2;
@@ -92,20 +94,17 @@ int main() {
     NotGate notGate(input1);
     cout << "NOT Gate: " << notGate.calculate() << endl;
 
-   // Functionality for the merge logic/functoin.
+    // Function call to merge fucntion.
     vector<unique_ptr<LogicGate>> gatesToMerge;
     int numGatesToMerge;
 
     cout << "Enter the number of gates you want to merge: ";
     cin >> numGatesToMerge;
 
-   // Input for the merge_gates fucntion.
-   
     for (int i = 0; i < numGatesToMerge; ++i) {
         string gateType;
         cout << "Enter gate type (AND, OR, NOT): ";
         cin >> gateType;
-
 
         if (gateType == "AND") {
             cout << "Enter input1 for AND gate: ";
@@ -130,6 +129,8 @@ int main() {
         }
     }
 
+
+    //Logic for the merge function.
     auto mergedGate = mergeGates(gatesToMerge);
 
     if (mergedGate) {
