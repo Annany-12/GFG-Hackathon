@@ -57,10 +57,6 @@ std::unique_ptr<LogicGate> mergeGates(const std::vector<std::unique_ptr<LogicGat
         return nullptr;
     }
 
-    // You can implement logic here to determine the type of gate to create based on user input
-    // For example, if the user inputs "or" and "not", create an XOR gate
-
-    // For simplicity, let's create an XOR gate
     bool input1 = gates[0]->evaluate();
     bool input2 = gates[1]->evaluate();
 
