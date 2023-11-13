@@ -1,132 +1,76 @@
 #include <iostream>
-#include <vector>
-#include <memory>
-using namespace std;
 
-class LogicGate {
-public:
-    virtual bool calculate() const = 0;
-};
+int sum(int num1, int num2);
 
-class AndGate : public LogicGate {
-private:
-    bool input1;
-    bool input2;
-
-public:
-    AndGate(bool input1, bool input2) : input1(input1), input2(input2) {}
-
-    virtual bool calculate() const override {
-        return input1 && input2;
-    }
-};
-
-class OrGate : public LogicGate {
-private:
-    bool input1;
-    bool input2;
-
-public:
-    OrGate(bool input1, bool input2) : input1(input1), input2(input2) {}
-
-    virtual bool calculate() const override {
-        return input1 || input2;
-    }
-};
-
-class NotGate : public LogicGate {
-private:
-    bool input;
-
-public:
-    NotGate(bool input) : input(input) {}
-
-    virtual bool calculate() const override {
-        return !input;
-    }
-};
-
-unique_ptr<LogicGate> mergeGates(const vector<unique_ptr<LogicGate>>& gates) {
-
-    if (gates.size() != 2) {
-        cerr << "Merge functionality currently supports merging two gates only." << endl;
-        return nullptr;
-    }
-
-    bool input1 = gates[0]->calculate();
-    bool input2 = gates[1]->calculate();
-
-    bool result = (input1 || input2) && !(input1 && input2);
-
-    return make_unique<AndGate>(input1, input2);
+int max(int num1, int num2){
+   int result = num1 > num2 ? num1 : num2;
+   return result;
 }
 
-int main() {
-    bool input1, input2;
-    cout << "Enter input1 for AND gate (1 for true, 0 for false): ";
-    cin >> input1;
-    cout << "Enter input2 for AND gate (1 for true, 0 for false): ";
-    cin >> input2;
+int main(){
+    std::cout << "-------" << std::endl;
+    std::cout << "Hello world!" << std::endl;
+    std::cout << "-------" << std::endl;
 
-    AndGate andGate(input1, input2);
-    cout << "AND Gate: " << andGate.calculate() << endl;
+    int number;
+    char name[100] = "Annany";
 
-    cout << "Enter input1 for OR gate (1 for true, 0 for false): ";
-    cin >> input1;
-    cout << "Enter input2 for OR gate (1 for true, 0 for false): ";
-    cin >> input2;
+    std::cout << "Number: ";
+    std::cin >> number; 
 
-    OrGate orGate(input1, input2);
-    cout << "OR Gate: " << orGate.calculate() << endl;
+    std::cout << "Entered number is " << number << std::endl;
+    std::cout << "-------" << std::endl;
 
-    cout << "Enter input for NOT gate (1 for true, 0 for false): ";
-    cin >> input1;
+    std::cout << "String: " << name << std::endl;
 
-    NotGate notGate(input1);
-    cout << "NOT Gate: " << notGate.calculate() << endl;
-
-    vector<unique_ptr<LogicGate>> gatesToMerge;
-    int numGatesToMerge;
-
-    cout << "Enter the number of gates you want to merge: ";
-    cin >> numGatesToMerge;
-
-    for (int i = 0; i < numGatesToMerge; ++i) {
-        string gateType;
-        cout << "Enter gate type (AND, OR, NOT): ";
-        cin >> gateType;
-
-
-        if (gateType == "AND") {
-            cout << "Enter input1 for AND gate: ";
-            cin >> input1;
-            cout << "Enter input2 for AND gate: ";
-            cin >> input2;
-            gatesToMerge.push_back(make_unique<AndGate>(input1, input2));
-        } 
-        
-        else if (gateType == "OR") {
-            cout << "Enter input1 for OR gate: ";
-            cin >> input1;
-            cout << "Enter input2 for OR gate: ";
-            cin >> input2;
-            gatesToMerge.push_back(make_unique<OrGate>(input1, input2));
-        } 
-        
-        else if (gateType == "NOT") {
-            cout << "Enter input for NOT gate: ";
-            cin >> input1;
-            gatesToMerge.push_back(make_unique<NotGate>(input1));
+    std::cout << "-------" << std::endl;
+    if(number > 100){
+        std::cout << "Greater than 100";
+    }
+    else if(number == 100){
+        std::cout << "Equal to 100" << std::endl;
+    }
+    else if(number < 100){
+        std::cout << "Less than 100" << std::endl;
+    }
+    else{
+        std::cout << "Not a number" << std::endl;
+    }
+    std::cout << "-------" << std::endl;
+    for(int i=1; i<=number; i++){
+        for(int j=1; j<=i; j++){
+            std::cout << "* ";
         }
+        std::cout << std::endl;
     }
-
-    auto mergedGate = mergeGates(gatesToMerge);
-
-    if (mergedGate) {
-        cout << "Merged Gate: " << mergedGate->calculate() << endl;
-    } else {
-        cerr << "Failed to merge gates." << endl;
+    std::cout << "-------" << std::endl;
+    for(int i=0; name[i] != '\0'; i++){
+        std::cout << name[i] << std::endl;
     }
+    std::cout << "-------" << std::endl;
+    int a = 10;
+    int b = 10;
+
+    int num1, num2 = 0;
+
+    int res = sum(a, b);
+    std::cout << "Sum: " << res << std::endl;
+    std::cout << "Sum: " << sum(30, 50) << std:: endl;
+
+    std::cout << "Num1: ";
+    std::cin >> num1;
+    std::cout << "Num2: ";
+    std::cin >> num2;
+
+    std::cout << "Sum for nums: " << sum(num1, num2) << std::endl;
+
+    std::cout << "-------" << std::endl;
+    std::cout << "Max: " << max(num1, num2) << std::endl;
 
     return 0;
+}
+
+int sum(int num1, int num2){
+    int result = num1 + num2;
+    return result;
 }
