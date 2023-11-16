@@ -1,143 +1,121 @@
-#include <iostream>
-#include <vector>
-#include <memory>
-using namespace std;
+import java.util.Scanner;
+import java.util.ArrayList;
+import java.util.List;
 
-// Main logic for the gate which needs to be inherited by all the classes.
-class LogicGate {
-public:
-    virtual bool calculate() const = 0;
-};
-
-// Logic class for AND Gate.
-class AndGate : public LogicGate {
-private:
-    bool input1;
-    bool input2;
-
-public:
-    AndGate(bool input1, bool input2) : input1(input1), input2(input2) {}
-
-    virtual bool calculate() const override {
-        return input1 && input2;
-    }
-};
-
-//Logic class for OR Gate.
-class OrGate : public LogicGate {
-private:
-    bool input1;
-    bool input2;
-
-public:
-    OrGate(bool input1, bool input2) : input1(input1), input2(input2) {}
-
-    virtual bool calculate() const override {
-        return input1 || input2;
-    }
-};
-
-//Logic class for NOT Gate.
-class NotGate : public LogicGate {
-private:
-    bool input;
-
-public:
-    NotGate(bool input) : input(input) {}
-
-    virtual bool calculate() const override {
-        return !input;
-    }
-};
-
-//Logic for the merge_function.
-unique_ptr<LogicGate> mergeGates(const vector<unique_ptr<LogicGate>>& gates) {
-
-    if (gates.size() != 2) {
-        cerr << "Merge functionality currently supports merging two gates only." << endl;
-        return nullptr;
-    }
-
-    bool input1 = gates[0]->calculate();
-    bool input2 = gates[1]->calculate();
-
-    bool result = (input1 || input2) && !(input1 && input2);
-
-    return make_unique<AndGate>(input1, input2);
+abstract class LogicGate {
+    public abstract boolean calculate();
 }
 
+class AndGate extends LogicGate {
+    private boolean input1;
+    private boolean input2;
 
-int main() {
-    bool input1, input2;
-    cout << "Inputs for AND gates (1 for true, 0 for false): " << endl;
-    cout << "Input 1: ";
-    cin >> input1;
-    cout << "Input 2: ";
-    cin >> input2;
+    public AndGate(boolean input1, boolean input2) {
+        this.input1 = input1;
+        this.input2 = input2;
+    }
 
-    AndGate andGate(input1, input2);
-    cout << "AND Gate: " << andGate.calculate() << endl;
+    public boolean calculate() {
+        return input1 && input2;
+    }
+}
 
-    cout << "Inputs for OR gates (1 for true, 0 for false): " << endl;
-    cout << "Input 1: ";
-    cin >> input1;
-    cout << "Input 2: ";
-    cin >> input2;
+class OrGate extends LogicGate {
+    private boolean input1;
+    private boolean input2;
 
-    OrGate orGate(input1, input2);
-    cout << "OR Gate: " << orGate.calculate() << endl;
+    public OrGate(boolean input1, boolean input2) {
+        this.input1 = input1;
+        this.input2 = input2;
+    }
 
-    cout << "Inputs for OR gates (1 for true, 0 for false): " << endl;
-    cout << "Input: ";
-    cin >> input1;
+    public boolean calculate() {
+        return input1 || input2;
+    }
+}
 
-    NotGate notGate(input1);
-    cout << "NOT Gate: " << notGate.calculate() << endl;
+class NotGate extends LogicGate {
+    private boolean input;
 
-    // Function call to merge fucntion.
-    vector<unique_ptr<LogicGate>> gatesToMerge;
-    int numGatesToMerge;
+    public NotGate(boolean input) {
+        this.input = input;
+    }
 
-    cout << "Enter the number of gates you want to merge: ";
-    cin >> numGatesToMerge;
+    public boolean calculate() {
+        return !input;
+    }
+}
 
-    for (int i = 0; i < numGatesToMerge; ++i) {
-        string gateType;
-        cout << "Enter gate type (AND, OR, NOT): ";
-        cin >> gateType;
+public class Main {
+    public static LogicGate mergeGates(List<LogicGate> gates) {
+        if (gates.size() != 2) {
+            System.err.println("Merge functionality currently supports merging two gates only.");
+            return null;
+        }
+        boolean input1 = gates.get(0).calculate();
+        boolean input2 = gates.get(1).calculate();
+        return new AndGate(input1, input2);
 
-        if (gateType == "AND") {
-            cout << "Enter input1 for AND gate: ";
-            cin >> input1;
-            cout << "Enter input2 for AND gate: ";
-            cin >> input2;
-            gatesToMerge.push_back(make_unique<AndGate>(input1, input2));
-        } 
-        
-        else if (gateType == "OR") {
-            cout << "Enter input1 for OR gate: ";
-            cin >> input1;
-            cout << "Enter input2 for OR gate: ";
-            cin >> input2;
-            gatesToMerge.push_back(make_unique<OrGate>(input1, input2));
-        } 
-        
-        else if (gateType == "NOT") {
-            cout << "Enter input for NOT gate: ";
-            cin >> input1;
-            gatesToMerge.push_back(make_unique<NotGate>(input1));
+    }
+
+    public static void main(String[] args) {
+        Scanner scanner = new Scanner(System.in);
+        boolean input1, input2;
+        System.out.println("Inputs for AND gates (1 for true, 0 for false): ");
+        System.out.print("Input 1: ");
+        input1 = scanner.nextBoolean();
+        System.out.print("Input 2: ");
+        input2 = scanner.nextBoolean();
+        AndGate andGate = new AndGate(input1, input2);
+        System.out.println("AND Gate: " + andGate.calculate());
+        System.out.println("Inputs for OR gates (1 for true, 0 for false): ");
+        System.out.print("Input 1: ");
+        input1 = scanner.nextBoolean();
+        System.out.print("Input 2: ");
+        input2 = scanner.nextBoolean();
+        OrGate orGate = new OrGate(input1, input2);
+        System.out.println("OR Gate: " + orGate.calculate());
+        System.out.println("Inputs for OR gates (1 for true, 0 for false): ");
+        System.out.print("Input: ");
+        input1 = scanner.nextBoolean();
+        NotGate notGate = new NotGate(input1);
+        System.out.println("NOT Gate: " + notGate.calculate());
+
+        List<LogicGate> gatesToMerge = new ArrayList<>();
+        int numGatesToMerge;
+        System.out.print("Enter the number of gates you want to merge: ");
+        numGatesToMerge = scanner.nextInt();
+        for (int i = 0; i < numGatesToMerge; ++i) {
+            System.out.print("Enter gate type (AND, OR, NOT): ");
+            String gateType = scanner.next();
+            
+            if (gateType.equals("AND")) {
+                System.out.print("Enter input1 for AND gate: ");
+                input1 = Boolean.parseBoolean(scanner.next());
+                System.out.print("Enter input2 for AND gate: ");
+                input2 = Boolean.parseBoolean(scanner.next());
+                gatesToMerge.add(new AndGate(input1, input2));
+            } else if (gateType.equals("OR")) {
+                System.out.print("Enter input1 for OR gate: ");
+                input1 = Boolean.parseBoolean(scanner.next());
+                System.out.print("Enter input2 for OR gate: ");
+                input2 = Boolean.parseBoolean(scanner.next());
+                gatesToMerge.add(new OrGate(input1, input2));
+            } else if (gateType.equals("NOT")) {
+                System.out.print("Enter input for NOT gate: ");
+                input1 = Boolean.parseBoolean(scanner.next());
+                gatesToMerge.add(new NotGate(input1));
+            }
+            
+        }
+
+        scanner.close();
+
+        LogicGate mergedGate = mergeGates(gatesToMerge);
+        if (mergedGate != null) {
+            System.out.println("Merged Gate: " + mergedGate.calculate());
+        } else {
+            System.err.println("Failed to merge gates.");
         }
     }
-
-
-    //Logic for the merge function.
-    auto mergedGate = mergeGates(gatesToMerge);
-
-    if (mergedGate) {
-        cout << "Merged Gate: " << mergedGate->calculate() << endl;
-    } else {
-        cerr << "Failed to merge gates." << endl;
-    }
-
-    return 0;
 }
