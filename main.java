@@ -61,21 +61,21 @@ public class Main {
     public static void main(String[] args) {
         Scanner scanner = new Scanner(System.in);
         boolean input1, input2;
-        System.out.println("Inputs for AND gates (1 for true, 0 for false): ");
+        System.out.println("Inputs for AND gates ('true' or 'false'): ");
         System.out.print("Input 1: ");
         input1 = scanner.nextBoolean();
         System.out.print("Input 2: ");
         input2 = scanner.nextBoolean();
         AndGate andGate = new AndGate(input1, input2);
         System.out.println("AND Gate: " + andGate.calculate());
-        System.out.println("Inputs for OR gates (1 for true, 0 for false): ");
+        System.out.println("Inputs for OR gates ('true' or 'false'): ");
         System.out.print("Input 1: ");
         input1 = scanner.nextBoolean();
         System.out.print("Input 2: ");
         input2 = scanner.nextBoolean();
         OrGate orGate = new OrGate(input1, input2);
         System.out.println("OR Gate: " + orGate.calculate());
-        System.out.println("Inputs for OR gates (1 for true, 0 for false): ");
+        System.out.println("Inputs for OR gates ('true' or 'false'): ");
         System.out.print("Input: ");
         input1 = scanner.nextBoolean();
         NotGate notGate = new NotGate(input1);
